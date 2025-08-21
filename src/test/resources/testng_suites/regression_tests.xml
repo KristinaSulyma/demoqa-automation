@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Regression Test Suite" verbose="1">
+    <listeners>
+        <listener class-name="com.demoqa.listeners.TestListener"/>
+    </listeners>
+    <test name="Widgets Regression Tests">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.demoqa.regression.WidgetsTests"/>
+        </classes>
+    </test>
+</suite>

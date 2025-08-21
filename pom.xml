@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DemoQA Automation Project POM Configuration
+
+  This Maven POM file configures the automation framework with:
+  - Core dependencies (Selenium, TestNG, WebDriverManager)
+  - Reporting tools (Allure)
+  - Logging (SLF4J, Log4j2)
+  - Build and test execution settings
+
+  Project Structure:
+  1. Project Metadata - Basic project identification
+  2. Properties - Version management for all dependencies
+  3. Dependencies - Library declarations
+  4. Build Configuration - Compiler and test execution setup
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ==================== PROJECT METADATA ==================== -->
+    <groupId>com.demoqa</groupId>
+    <artifactId>demoqa-automation</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!-- ==================== PROPERTIES ==================== -->
+    <properties>
+        <!-- Java Compiler Settings -->
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Dependency Versions -->
+        <selenium.version>4.34.0</selenium.version>          <!-- Selenium WebDriver -->
+        <testng.version>7.11.0</testng.version>              <!-- TestNG Framework -->
+        <webdrivermanager.version>6.2.0</webdrivermanager.version>  <!-- WebDriver Manager -->
+        <allure.testng.version>2.29.1</allure.testng.version>      <!-- Allure TestNG Integration -->
+
+        <!-- Plugin Versions -->
+        <maven.surefire.plugin.version>3.5.3</maven.surefire.plugin.version>  <!-- Surefire Plugin -->
+        <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>  <!-- Compiler Plugin -->
+
+        <!-- Logging Versions -->
+        <slf4j.version>2.0.17</slf4j.version>                <!-- SLF4J Logging Facade -->
+        <log4j.version>2.25.1</log4j.version>                <!-- Log4j2 Implementation -->
+        <aspectj.version>1.9.24</aspectj.version>            <!-- AspectJ Weaver -->
+    </properties>
+
+    <!-- ==================== DEPENDENCIES ==================== -->
+    <dependencies>
+        <!-- Selenium WebDriver - Browser automation core -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+
+        <!-- TestNG - Testing framework -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- WebDriverManager - Automated driver management -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+        </dependency>
+
+        <!-- Allure TestNG - Reporting integration -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.testng.version}</version>
+        </dependency>
+
+        <!-- SLF4J Simple Binding - Logging implementation -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <!-- Log4j2 Core - Advanced logging -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+    </dependencies>
+
+    <!-- ==================== BUILD CONFIGURATION ==================== -->
+    <build>
+        <plugins>
+            <!-- Maven Compiler Plugin - Java compilation -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+            </plugin>
+
+            <!-- Maven Surefire Plugin - Test execution -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+                <configuration>
+                    <!-- TestNG suite files to execute -->
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/testng_suites/functional_tests.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/testng_suites/regression_tests.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/testng_suites/smoke_tests.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+
+                    <!-- AspectJ weaver for Allure reporting -->
+                    <argLine>
+                        -Dwebdriver.chrome.whitelistedIps=
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+
+                    <!-- Allure results directory configuration -->
+                    <systemPropertyVariables>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${project.build.directory}/allure-results</value>
+                        </property>
+                    </systemPropertyVariables>
+                </configuration>
+                <dependencies>
+                    <!-- AspectJ weaver dependency for runtime bytecode manipulation -->
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>
