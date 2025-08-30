@@ -10,7 +10,6 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 import java.time.Duration;
 import java.util.*;
@@ -48,11 +47,6 @@ public class BaseTest {
     protected ConfigurationManager config;
 
     /**
-     * WebDriverWait instance for explicit waits
-     */
-    protected WebDriverWait wait;
-
-    /**
      * Sets up the test environment before each test method.
      * Initializes the WebDriver based on the specified browser parameter.
      * Configures browser options and sets timeouts.
@@ -78,7 +72,6 @@ public class BaseTest {
 
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(config.getPageLoadTimeoutSeconds()));
-        wait = new WebDriverWait(driver, Duration.ofSeconds(config.getImplicitWaitSeconds()));
     }
 
     /**

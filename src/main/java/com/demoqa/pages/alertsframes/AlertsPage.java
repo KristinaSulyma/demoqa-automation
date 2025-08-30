@@ -1,7 +1,6 @@
 package com.demoqa.pages.alertsframes;
 
 import com.demoqa.pages.BasePage;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait; // Add this import
+import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
@@ -26,19 +25,22 @@ import java.util.List;
 public class AlertsPage extends BasePage {
 
     @FindBy(id = "alertButton")
-    WebElement alertButton;
+    private WebElement alertButton;
+
+    @FindBy(id = "timerAlertButton")
+    private WebElement timerAlertButton;
 
     @FindBy(id = "confirmButton")
-    WebElement confirmButton;
+    private WebElement confirmButton;
 
     @FindBy(id = "promtButton")
-    WebElement promptButton;
+    private WebElement promptButton;
 
     @FindBy(id = "confirmResult")
-    WebElement confirmResultText;
+    private WebElement confirmResultText;
 
     @FindBy(id = "promptResult")
-    WebElement promptResultText;
+    private WebElement promptResultText;
 
     /**
      * Constructor for AlertsPage.
@@ -55,6 +57,7 @@ public class AlertsPage extends BasePage {
      */
     public void clickAlertButton() {
         waitForElementToBeClickable(alertButton).click();
+        waitForAlert();
     }
 
     /**
@@ -104,9 +107,9 @@ public class AlertsPage extends BasePage {
 
     /**
      * Attempts to handle advertisement iframes that might block interaction with page elements.
-     * Switches to ad iframe if present, tries to close it, then returns to main content.
+     * Switches to Ad iframe if present, tries to close it, then returns to main content.
      */
-    public void handleAdIfPresent() {
+    private void handleAdIfPresent() {
         try {
             WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
@@ -130,11 +133,10 @@ public class AlertsPage extends BasePage {
 
     /**
      * Waits for alert to be present.
-     * @return Alert instance
      * @throws org.openqa.selenium.TimeoutException if alert doesn't appear within wait time
      */
-    private Alert waitForAlert() {
-        return wait.until(ExpectedConditions.alertIsPresent());
+    private void waitForAlert() {
+        wait.until(ExpectedConditions.alertIsPresent());
     }
 
     /**

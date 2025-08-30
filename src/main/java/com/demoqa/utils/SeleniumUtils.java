@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Utility class providing common Selenium WebDriver helper methods.
@@ -36,18 +37,29 @@ public class SeleniumUtils {
      * @return The full path to the saved screenshot, or null if saving failed
      */
     public static String takeScreenshot(WebDriver driver, String screenshotName) {
-        File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        String targetPath = "target/screenshots/" + screenshotName + ".png";
-
         try {
-            Path path = Paths.get("target/screenshots/");
-            if (!Files.exists(path)) {
-                Files.createDirectories(path);
+            Path screenshotsDir = Paths.get("target/screenshots");
+            if (!Files.exists(screenshotsDir)) {
+                Files.createDirectories(screenshotsDir);
             }
-            FileHandler.copy(screenshotFile, new File(targetPath));
-            return targetPath;
+
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+            String fileName = screenshotName + "_" + timestamp + ".png";
+            File destinationFile = new File(screenshotsDir.toFile(), fileName);
+
+            File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            FileHandler.copy(screenshotFile, destinationFile);
+
+            String absolutePath = destinationFile.getAbsolutePath();
+            System.out.println("Screenshot saved: " + absolutePath);
+
+            return absolutePath;
+
         } catch (IOException e) {
             System.err.println("Failed to save screenshot: " + e.getMessage());
+            return null;
+        } catch (Exception e) {
+            System.err.println("Unexpected error while taking screenshot: " + e.getMessage());
             return null;
         }
     }

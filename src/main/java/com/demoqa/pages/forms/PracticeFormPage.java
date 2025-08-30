@@ -70,7 +70,6 @@ public class PracticeFormPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-
     /**
      * Sets date of birth using direct input (alternative method)
      *
@@ -85,7 +84,6 @@ public class PracticeFormPage extends BasePage {
         element.sendKeys(Keys.ENTER);
         return this;
     }
-
 
     /**
      * Enters first name into the corresponding field.

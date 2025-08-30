@@ -8,12 +8,6 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * A TestNG listener class that provides test monitoring capabilities and screenshot functionality.
@@ -45,20 +39,14 @@ public class TestListener implements ITestListener {
             WebDriver driver = ((BaseTest) testClass).getDriver();
 
             if (driver != null) {
-                byte[] screenshotData = saveScreenshot(driver);
                 String screenshotName = result.getMethod().getMethodName();
+                byte[] allureScreenshot = saveScreenshotForAllure(driver);
+                String filePath = SeleniumUtils.takeScreenshot(driver, screenshotName);
 
-
-                saveScreenshotToFile(screenshotData, screenshotName);
-
-
-                SeleniumUtils.takeScreenshot(driver, screenshotName);
-
-
-                if (screenshotData.length > 0) {
-                    System.out.println("Screenshot captured successfully: " + screenshotData.length + " bytes");
+                if (allureScreenshot.length > 0 && filePath != null) {
+                    System.out.println("Screenshot captured and saved successfully: " + filePath);
                 } else {
-                    System.out.println("Failed to capture screenshot");
+                    System.out.println("Failed to capture or save screenshot");
                 }
             }
         }
@@ -73,42 +61,11 @@ public class TestListener implements ITestListener {
      * @return Byte array representing the PNG screenshot, or empty array if capture fails
      */
     @Attachment(value = "Failure Screenshot", type = "image/png")
-    private byte[] saveScreenshot(WebDriver driver) {
+    private byte[] saveScreenshotForAllure(WebDriver driver) {
         if (driver instanceof TakesScreenshot) {
             return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
         }
         return new byte[0];
-    }
-
-    /**
-     * Saves screenshot bytes to a local file for additional backup.
-     *
-     * @param screenshotData The screenshot byte array
-     * @param testName The name of the test for file naming
-     */
-    private void saveScreenshotToFile(byte[] screenshotData, String testName) {
-        if (screenshotData.length == 0) {
-            return;
-        }
-
-        try {
-            Path screenshotsDir = Paths.get("target/screenshots");
-            if (!Files.exists(screenshotsDir)) {
-                Files.createDirectories(screenshotsDir);
-            }
-
-
-            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-            String fileName = testName + "_" + timestamp + ".png";
-            Path filePath = screenshotsDir.resolve(fileName);
-
-
-            Files.write(filePath, screenshotData);
-            System.out.println("Screenshot saved to: " + filePath.toAbsolutePath());
-
-        } catch (IOException e) {
-            System.out.println("Failed to save screenshot to file: " + e.getMessage());
-        }
     }
 
     /**

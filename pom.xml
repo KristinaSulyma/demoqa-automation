@@ -30,6 +30,7 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <slf4j.version>2.0.9</slf4j.version>
 
         <!-- Dependency Versions -->
         <selenium.version>4.34.0</selenium.version>          <!-- Selenium WebDriver -->
@@ -44,7 +45,7 @@
         <!-- Logging Versions -->
         <slf4j.version>2.0.17</slf4j.version>                <!-- SLF4J Logging Facade -->
         <log4j.version>2.25.1</log4j.version>                <!-- Log4j2 Implementation -->
-        <aspectj.version>1.9.24</aspectj.version>            <!-- AspectJ Weaver -->
+        <aspectj.version>1.9.24</aspectj.version>
     </properties>
 
     <!-- ==================== DEPENDENCIES ==================== -->
@@ -76,6 +77,13 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
             <version>${allure.testng.version}</version>
+        </dependency>
+
+        <!-- SLF4J API -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <!-- SLF4J Simple Binding - Logging implementation -->

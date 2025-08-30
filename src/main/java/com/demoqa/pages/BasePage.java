@@ -4,7 +4,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.List;
 
@@ -14,8 +13,8 @@ import java.util.List;
  * All specific page classes should extend this base class.
  */
 public class BasePage {
-    protected WebDriver driver;
-    protected WebDriverWait wait;
+    protected final WebDriver driver;
+    protected final WebDriverWait wait;
 
     /**
      * Initializes a new instance of the BasePage.
@@ -95,15 +94,5 @@ public class BasePage {
     protected void scrollIntoView(WebElement element) {
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element);
-    }
-
-    /**
-     * Waits for the specified element to become visible.
-     *
-     * @param element The WebElement to wait for
-     * @return The visible WebElement
-     */
-    protected WebElement waitForVisibility(WebElement element) {
-        return wait.until(ExpectedConditions.visibilityOf(element));
     }
 }

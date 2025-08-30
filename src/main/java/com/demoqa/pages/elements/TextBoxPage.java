@@ -38,7 +38,7 @@ public class TextBoxPage extends BasePage {
      */
     public TextBoxPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this); // Додано ініціалізацію PageFactory
+        PageFactory.initElements(driver, this);
     }
 
     /**

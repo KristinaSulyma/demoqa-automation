@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
 
 /**
- * Page Object class for interacting with the Check Box page on demoqa.com.
+ * Page Object class for interacting with the CheckBox page on demoqa.com.
  * Provides methods to manage and verify checkbox operations including:
  * <ul>
  *   <li>Expanding the checkbox tree</li>
@@ -37,7 +37,7 @@ public class CheckBoxPage extends BasePage {
      */
     public CheckBoxPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this); // Додано ініціалізацію PageFactory
+        PageFactory.initElements(driver, this);
     }
 
     /**
