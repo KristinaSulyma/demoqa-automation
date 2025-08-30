@@ -3,6 +3,7 @@ package com.demoqa.pages.forms;
 import com.demoqa.pages.BasePage;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -20,69 +21,75 @@ import java.util.List;
  */
 public class PracticeFormPage extends BasePage {
 
-    // Locators
     @FindBy(id = "firstName")
-    private WebElement firstNameInput;
+    WebElement firstNameInput;
 
     @FindBy(id = "lastName")
-    private WebElement lastNameInput;
+    WebElement lastNameInput;
 
     @FindBy(id = "userEmail")
-    private WebElement userEmailInput;
+    WebElement userEmailInput;
 
     @FindBy(css = "[for^='gender-radio']")
-    private List<WebElement> genderOptions;
+    List<WebElement> genderOptions;
 
     @FindBy(id = "userNumber")
-    private WebElement userNumberInput;
+    WebElement userNumberInput;
 
     @FindBy(id = "dateOfBirthInput")
-    private WebElement dateOfBirthInput;
+    WebElement dateOfBirthInput;
 
     @FindBy(id = "subjectsInput")
-    private WebElement subjectsInput;
+    WebElement subjectsInput;
 
     @FindBy(css = "[for^='hobbies-checkbox']")
-    private List<WebElement> hobbiesOptions;
+    List<WebElement> hobbiesOptions;
 
     @FindBy(id = "uploadPicture")
-    private WebElement uploadPictureButton;
+    WebElement uploadPictureButton;
 
     @FindBy(id = "currentAddress")
-    private WebElement currentAddressInput;
-
-    @FindBy(id = "state")
-    private WebElement stateDropdown;
-
-    @FindBy(id = "city")
-    private WebElement cityDropdown;
+    WebElement currentAddressInput;
 
     @FindBy(id = "submit")
-    private WebElement submitButton;
+    WebElement submitButton;
 
     @FindBy(id = "example-modal-sizes-title-lg")
-    private WebElement modalHeader;
+    WebElement modalHeader;
 
     @FindBy(id = "closeLargeModal")
-    private WebElement closeButton;
-
-    @FindBy(className = "react-datepicker__month-select")
-    private WebElement monthSelect;
-
-    @FindBy(className = "react-datepicker__year-select")
-    private WebElement yearSelect;
+    WebElement closeButton;
 
     /**
      * Constructor for PracticeFormPage.
+     *
      * @param driver WebDriver instance
      */
     public PracticeFormPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
 
-    // Main methods
+
+    /**
+     * Sets date of birth using direct input (alternative method)
+     *
+     * @param date Date in format "MM/DD/YYYY" or other supported format
+     * @return Current instance of PracticeFormPage for method chaining
+     */
+    public PracticeFormPage setDateOfBirthSimple(String date) {
+        // Очищаємо поле і вводимо дату напряму
+        WebElement element = waitForVisibility(dateOfBirthInput);
+        element.clear();
+        element.sendKeys(date);
+        element.sendKeys(Keys.ENTER);
+        return this;
+    }
+
+
     /**
      * Enters first name into the corresponding field.
+     *
      * @param firstName First name to enter
      * @return Current instance of PracticeFormPage for method chaining
      */
@@ -93,6 +100,7 @@ public class PracticeFormPage extends BasePage {
 
     /**
      * Enters last name into the corresponding field.
+     *
      * @param lastName Last name to enter
      * @return Current instance of PracticeFormPage for method chaining
      */
@@ -103,6 +111,7 @@ public class PracticeFormPage extends BasePage {
 
     /**
      * Enters email address into the corresponding field.
+     *
      * @param email Email to enter
      * @return Current instance of PracticeFormPage for method chaining
      */
@@ -113,6 +122,7 @@ public class PracticeFormPage extends BasePage {
 
     /**
      * Selects gender option.
+     *
      * @param gender Gender to select ("Male", "Female", or "Other")
      * @return Current instance of PracticeFormPage for method chaining
      */
@@ -126,6 +136,7 @@ public class PracticeFormPage extends BasePage {
 
     /**
      * Enters phone number into the corresponding field.
+     *
      * @param phone Phone number to enter (10 digits)
      * @return Current instance of PracticeFormPage for method chaining
      */
@@ -135,22 +146,8 @@ public class PracticeFormPage extends BasePage {
     }
 
     /**
-     * Sets date of birth using the date picker.
-     * @param day Day of birth (e.g., "15")
-     * @param month Month of birth (e.g., "January")
-     * @param year Year of birth (e.g., "1990")
-     * @return Current instance of PracticeFormPage for method chaining
-     */
-    public PracticeFormPage setDateOfBirth(String day, String month, String year) {
-        jsClick(dateOfBirthInput);
-        selectFromDropdown(monthSelect, month);
-        selectFromDropdown(yearSelect, year);
-        selectDayInCalendar(day);
-        return this;
-    }
-
-    /**
      * Enters subjects into the subjects field.
+     *
      * @param subjects Subjects to enter
      * @return Current instance of PracticeFormPage for method chaining
      */
@@ -164,6 +161,7 @@ public class PracticeFormPage extends BasePage {
 
     /**
      * Selects hobbies from the available options.
+     *
      * @param hobbies List of hobbies to select
      * @return Current instance of PracticeFormPage for method chaining
      */
@@ -176,6 +174,7 @@ public class PracticeFormPage extends BasePage {
 
     /**
      * Uploads a file using the file input.
+     *
      * @param filePath Full path to the file to upload
      * @return Current instance of PracticeFormPage for method chaining
      */
@@ -186,31 +185,12 @@ public class PracticeFormPage extends BasePage {
 
     /**
      * Enters current address into the corresponding field.
+     *
      * @param address Address to enter
      * @return Current instance of PracticeFormPage for method chaining
      */
     public PracticeFormPage enterAddress(String address) {
         waitAndSendKeys(currentAddressInput, address);
-        return this;
-    }
-
-    /**
-     * Selects state from the dropdown.
-     * @param state State to select
-     * @return Current instance of PracticeFormPage for method chaining
-     */
-    public PracticeFormPage selectState(String state) {
-        selectFromDropdown(stateDropdown, state);
-        return this;
-    }
-
-    /**
-     * Selects city from the dropdown.
-     * @param city City to select
-     * @return Current instance of PracticeFormPage for method chaining
-     */
-    public PracticeFormPage selectCity(String city) {
-        selectFromDropdown(cityDropdown, city);
         return this;
     }
 
@@ -221,9 +201,10 @@ public class PracticeFormPage extends BasePage {
         jsClick(submitButton);
     }
 
-    // Verification methods
+
     /**
      * Checks if the submission modal is displayed.
+     *
      * @return true if modal is displayed, false otherwise
      */
     public boolean isModalDisplayed() {
@@ -237,6 +218,7 @@ public class PracticeFormPage extends BasePage {
 
     /**
      * Gets the title text from the submission modal.
+     *
      * @return Modal title text
      */
     public String getModalTitle() {
@@ -253,21 +235,22 @@ public class PracticeFormPage extends BasePage {
                             By.cssSelector("iframe[id^='google_ads_iframe']")));
             jsClick(closeButton);
         } catch (TimeoutException e) {
-            ((JavascriptExecutor)driver).executeScript("arguments[0].click();", closeButton);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", closeButton);
         }
     }
 
-    // Helper methods
     /**
      * Clicks an element using JavaScript.
+     *
      * @param element WebElement to click
      */
     protected void jsClick(WebElement element) {
-        ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
 
     /**
      * Waits for an element to become visible.
+     *
      * @param element WebElement to wait for
      * @return Visible WebElement
      */
@@ -278,133 +261,13 @@ public class PracticeFormPage extends BasePage {
 
     /**
      * Waits for an element to be visible and sends keys to it.
+     *
      * @param element WebElement to interact with
-     * @param text Text to send
+     * @param text    Text to send
      */
     private void waitAndSendKeys(WebElement element, String text) {
         WebElement visibleElement = waitForVisibility(element);
         visibleElement.clear();
         visibleElement.sendKeys(text);
-    }
-
-    /**
-     * Selects an option from a dropdown.
-     * @param dropdown Dropdown WebElement
-     * @param value Value to select
-     */
-    private void selectFromDropdown(WebElement dropdown, String value) {
-        jsClick(dropdown);
-        WebElement option = new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOfElementLocated(
-                        By.xpath(String.format("//div[contains(text(),'%s')]", value))));
-        jsClick(option);
-    }
-
-    /**
-     * Selects a day in the date picker calendar.
-     * @param day Day to select
-     */
-    private void selectDayInCalendar(String day) {
-        WebElement dayElement = new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.elementToBeClickable(
-                        By.xpath(String.format("//div[contains(@class,'react-datepicker__day') and text()='%s']", day))));
-        jsClick(dayElement);
-    }
-
-    // Legacy methods (for backward compatibility)
-    /**
-     * @deprecated Use {@link #enterFirstName(String)} instead
-     */
-    @Deprecated
-    public void fillFirstName(String firstName) {
-        enterFirstName(firstName);
-    }
-
-    /**
-     * @deprecated Use {@link #enterLastName(String)} instead
-     */
-    @Deprecated
-    public void fillLastName(String lastName) {
-        enterLastName(lastName);
-    }
-
-    /**
-     * @deprecated Use {@link #enterEmail(String)} instead
-     */
-    @Deprecated
-    public void fillEmail(String email) {
-        enterEmail(email);
-    }
-
-    /**
-     * @deprecated Use {@link #selectGender(String)} instead
-     */
-    @Deprecated
-    public void selectGenderOld(String gender) {
-        selectGender(gender);
-    }
-
-    /**
-     * @deprecated Use {@link #enterPhoneNumber(String)} instead
-     */
-    @Deprecated
-    public void fillUserNumber(String number) {
-        enterPhoneNumber(number);
-    }
-
-    /**
-     * @deprecated Use {@link #setDateOfBirth(String, String, String)} instead
-     */
-    @Deprecated
-    public void fillDateOfBirth(String date) {
-        dateOfBirthInput.sendKeys(date);
-    }
-
-    /**
-     * @deprecated Use {@link #selectHobbies(List)} instead
-     */
-    @Deprecated
-    public void selectHobby(String hobby) {
-        selectHobbies(List.of(hobby));
-    }
-
-    /**
-     * @deprecated Use {@link #enterAddress(String)} instead
-     */
-    @Deprecated
-    public void fillCurrentAddress(String address) {
-        enterAddress(address);
-    }
-
-    /**
-     * @deprecated Use {@link #uploadPicture(String)} instead
-     */
-    @Deprecated
-    public void uploadPictureOld(String filePath) {
-        uploadPicture(filePath);
-    }
-
-    /**
-     * @deprecated Use {@link #enterSubjects(String)} instead
-     */
-    @Deprecated
-    public void fillSubjects(String subjects) {
-        enterSubjects(subjects);
-    }
-
-    /**
-     * @deprecated Use {@link #selectState(String)} instead
-     */
-    @Deprecated
-    public void selectStateOld(String state) {
-        selectState(state);
-    }
-
-    /**
-     * @deprecated Use {@link #selectCity(String)} instead
-     */
-    @Deprecated
-    public void selectCityOld(String city) {
-        selectCity(city);
     }
 }

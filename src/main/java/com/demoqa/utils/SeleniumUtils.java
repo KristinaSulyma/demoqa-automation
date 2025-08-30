@@ -2,15 +2,12 @@ package com.demoqa.utils;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.io.FileHandler;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Duration;
+
 
 /**
  * Utility class providing common Selenium WebDriver helper methods.
@@ -28,30 +25,6 @@ public class SeleniumUtils {
     public static void clickWithJS(WebDriver driver, WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", element);
-    }
-
-    /**
-     * Enters text into a WebElement using JavaScript executor.
-     * Bypasses normal sendKeys() when direct text input is problematic.
-     *
-     * @param driver The WebDriver instance
-     * @param element The WebElement to receive text
-     * @param text The text to be entered
-     */
-    public static void enterTextWithJS(WebDriver driver, WebElement element, String text) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].value='" + text + "';", element);
-    }
-
-    /**
-     * Scrolls the page to make the specified element visible in the viewport.
-     *
-     * @param driver The WebDriver instance
-     * @param element The WebElement to scroll to
-     */
-    public static void scrollToElement(WebDriver driver, WebElement element) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     /**
@@ -77,29 +50,5 @@ public class SeleniumUtils {
             System.err.println("Failed to save screenshot: " + e.getMessage());
             return null;
         }
-    }
-
-    /**
-     * Waits for an element to become clickable within the specified timeout.
-     *
-     * @param driver The WebDriver instance
-     * @param element The WebElement to wait for
-     * @param timeout The maximum duration to wait
-     */
-    public static void waitForElementToBeClickable(WebDriver driver, WebElement element, Duration timeout) {
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-    }
-
-    /**
-     * Waits for an element to become visible within the specified timeout.
-     *
-     * @param driver The WebDriver instance
-     * @param element The WebElement to wait for
-     * @param timeout The maximum duration to wait
-     */
-    public static void waitForElementToBeVisible(WebDriver driver, WebElement element, Duration timeout) {
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.visibilityOf(element));
     }
 }

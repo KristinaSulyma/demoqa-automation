@@ -112,11 +112,9 @@ public class ElementsTests extends BaseTest {
         radioButtonPage.clickYesRadioButton();
         Assert.assertTrue(radioButtonPage.getResultText().contains("Yes"),
                 "Result should reflect 'Yes' selection");
-
         radioButtonPage.clickImpressiveRadioButton();
         Assert.assertTrue(radioButtonPage.getResultText().contains("Impressive"),
                 "Result should reflect 'Impressive' selection");
-
         Assert.assertFalse(radioButtonPage.isNoRadioButtonEnabled(),
                 "'No' radio button should remain disabled as per requirements");
     }

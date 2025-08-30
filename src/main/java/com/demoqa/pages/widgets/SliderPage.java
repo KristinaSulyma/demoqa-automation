@@ -5,6 +5,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 /**
  * Represents the Slider widget page in the application.
@@ -14,10 +15,10 @@ import org.openqa.selenium.support.FindBy;
 public class SliderPage extends BasePage {
 
     @FindBy(css = ".range-slider")
-    private WebElement slider;
+    WebElement slider;
 
     @FindBy(id = "sliderValue")
-    private WebElement sliderValue;
+    WebElement sliderValue;
 
     /**
      * Constructs a new SliderPage instance.
@@ -26,6 +27,7 @@ public class SliderPage extends BasePage {
      */
     public SliderPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
 
     /**
@@ -36,8 +38,6 @@ public class SliderPage extends BasePage {
      */
     public void setSliderValue(int value) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        // Sets the value directly for both the slider and input field
-        // to ensure the value is properly updated
         js.executeScript("arguments[0].value = arguments[1]; arguments[2].value = arguments[1];", slider, value, sliderValue);
     }
 

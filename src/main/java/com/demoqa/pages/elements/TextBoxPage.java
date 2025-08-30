@@ -5,6 +5,7 @@ import com.demoqa.utils.SeleniumUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
@@ -14,22 +15,22 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class TextBoxPage extends BasePage {
 
     @FindBy(id = "userName")
-    private WebElement fullNameInput;
+    WebElement fullNameInput;
 
     @FindBy(id = "userEmail")
-    private WebElement emailInput;
+    WebElement emailInput;
 
     @FindBy(id = "currentAddress")
-    private WebElement currentAddressInput;
+    WebElement currentAddressInput;
 
     @FindBy(id = "permanentAddress")
-    private WebElement permanentAddressInput;
+    WebElement permanentAddressInput;
 
     @FindBy(id = "submit")
-    private WebElement submitButton;
+    WebElement submitButton;
 
     @FindBy(id = "output")
-    private WebElement outputBox;
+    WebElement outputBox;
 
     /**
      * Constructs a new TextBoxPage instance.
@@ -37,6 +38,7 @@ public class TextBoxPage extends BasePage {
      */
     public TextBoxPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this); // Додано ініціалізацію PageFactory
     }
 
     /**

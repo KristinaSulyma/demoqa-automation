@@ -92,18 +92,18 @@ public class BaseTest {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
 
-        // Blocking ads and notifications
+
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-extensions");
         options.addArguments("--disable-infobars");
         options.addArguments("--remote-allow-origins=*");
 
-        // Disabling automation flags
-        options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
+
+        options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
         options.setExperimentalOption("useAutomationExtension", false);
 
-        // Ad-blocking preferences
+
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("profile.default_content_setting_values.popups", 0);
         prefs.put("profile.default_content_setting_values.notifications", 2);
@@ -132,7 +132,7 @@ public class BaseTest {
         WebDriverManager.edgedriver().setup();
         EdgeOptions options = new EdgeOptions();
         options.addArguments("--disable-notifications");
-        options.setExperimentalOption("excludeSwitches", Arrays.asList("enable-automation"));
+        options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
         driver = new EdgeDriver(options);
     }
 

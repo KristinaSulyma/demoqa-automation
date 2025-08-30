@@ -4,7 +4,7 @@ import com.demoqa.pages.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.PageFactory;
 
 /**
  * Page Object class for interacting with the Progress Bar widget on demoqa.com.
@@ -13,10 +13,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class ProgressBarPage extends BasePage {
 
     @FindBy(id = "startStopButton")
-    private WebElement startStopButton;
+    WebElement startStopButton;
 
     @FindBy(css = ".progress-bar")
-    private WebElement progressBar;
+    WebElement progressBar;
 
     /**
      * Constructs a new ProgressBarPage instance.
@@ -24,6 +24,7 @@ public class ProgressBarPage extends BasePage {
      */
     public ProgressBarPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
 
     /**

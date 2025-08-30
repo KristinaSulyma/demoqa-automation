@@ -41,8 +41,8 @@ public class BasePage {
      */
     protected void waitForPageToLoad() {
         try {
-            wait.until(d -> ((JavascriptExecutor) driver)
-                    .executeScript("return document.readyState").equals("complete"));
+            wait.until(d -> "complete".equals(((JavascriptExecutor) driver)
+                    .executeScript("return document.readyState")));
         } catch (WebDriverException e) {
             System.out.println("Page load wait interrupted: " + e.getMessage());
         }
@@ -80,7 +80,6 @@ public class BasePage {
             scrollIntoView(element);
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
         } catch (StaleElementReferenceException e) {
-            // If element is stale, refresh and retry
             WebElement refreshedElement = wait.until(ExpectedConditions.refreshed(
                     ExpectedConditions.elementToBeClickable(element)));
             scrollIntoView(refreshedElement);
@@ -106,50 +105,5 @@ public class BasePage {
      */
     protected WebElement waitForVisibility(WebElement element) {
         return wait.until(ExpectedConditions.visibilityOf(element));
-    }
-
-    /**
-     * Waits for all specified elements in the list to become visible.
-     *
-     * @param elements List of WebElements to wait for
-     */
-    protected void waitForVisibilityOfAll(List<WebElement> elements) {
-        wait.until(ExpectedConditions.visibilityOfAllElements(elements));
-    }
-
-    /**
-     * Waits for the specified element to become invisible.
-     *
-     * @param element The WebElement to wait for
-     */
-    protected void waitForInvisibility(WebElement element) {
-        wait.until(ExpectedConditions.invisibilityOf(element));
-    }
-
-    /**
-     * Sends keys to an element after ensuring it's clickable and clearing it.
-     *
-     * @param element The WebElement to receive the text
-     * @param text The text to be sent to the element
-     */
-    protected void sendKeysWithWait(WebElement element, String text) {
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-        element.clear();
-        element.sendKeys(text);
-    }
-
-    /**
-     * Checks if an element is present on the page.
-     *
-     * @param locator The By locator to search for
-     * @return true if the element is present, false otherwise
-     */
-    protected boolean isElementPresent(By locator) {
-        try {
-            driver.findElement(locator);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
     }
 }

@@ -5,6 +5,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 /**
  * Page Object class for interacting with the Date Picker widget on demoqa.com.
@@ -13,7 +14,7 @@ import org.openqa.selenium.support.FindBy;
 public class DatePickerPage extends BasePage {
 
     @FindBy(id = "dateAndTimePickerInput")
-    private WebElement dateAndTimePickerInput;
+    WebElement dateAndTimePickerInput;
 
     /**
      * Constructs a new DatePickerPage instance.
@@ -21,6 +22,7 @@ public class DatePickerPage extends BasePage {
      */
     public DatePickerPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
 
     /**

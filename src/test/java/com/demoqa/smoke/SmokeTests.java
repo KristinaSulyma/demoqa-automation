@@ -3,9 +3,13 @@ package com.demoqa.smoke;
 import com.demoqa.base.BaseTest;
 import com.demoqa.config.ConfigurationManager;
 import com.demoqa.pages.elements.TextBoxPage;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 /**
  * Smoke test suite for basic verification of DemoQA website functionality.
@@ -25,6 +29,7 @@ import org.testng.annotations.Test;
 public class SmokeTests extends BaseTest {
 
     private TextBoxPage textBoxPage;
+    private WebDriverWait wait;
 
     /**
      * Initializes page objects before each test method execution.
@@ -34,6 +39,7 @@ public class SmokeTests extends BaseTest {
     @BeforeMethod
     public void setupPages() {
         textBoxPage = new TextBoxPage(driver);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     /**
@@ -50,6 +56,7 @@ public class SmokeTests extends BaseTest {
     @Test
     public void testHomePageLoadsSuccessfully() {
         driver.get(new ConfigurationManager().getBaseUrl());
+        wait.until(ExpectedConditions.titleIs("DEMOQA"));
         Assert.assertEquals(driver.getTitle(), "DEMOQA",
                 "Home page title should be 'DEMOQA'.");
     }
@@ -67,9 +74,10 @@ public class SmokeTests extends BaseTest {
      */
     @Test
     public void testTextBoxPageLoadsSuccessfully() {
-        driver.get(new ConfigurationManager().getBaseUrl() + "/text-box");
-        Assert.assertEquals(driver.getCurrentUrl(),
-                new ConfigurationManager().getBaseUrl() + "/text-box",
+        String expectedUrl = new ConfigurationManager().getBaseUrl() + "/text-box";
+        driver.get(expectedUrl);
+        wait.until(ExpectedConditions.urlToBe(expectedUrl));
+        Assert.assertEquals(driver.getCurrentUrl(), expectedUrl,
                 "Text Box page URL should be correct.");
     }
 }

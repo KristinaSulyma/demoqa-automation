@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import java.io.File;
+import java.util.List;
 
 /**
  * Functional test class for verifying form submission functionality.
@@ -69,30 +70,29 @@ public class FormsTests extends BaseTest {
      */
     @Test
     public void testFormSubmissionWithAllFields() {
-        // Navigate to form page
         driver.get(new ConfigurationManager().getBaseUrl() + "/automation-practice-form");
 
-        // Fill form with test data
-        practiceFormPage.fillFirstName("John");
-        practiceFormPage.fillLastName("Doe");
-        practiceFormPage.fillEmail("john.doe@example.com");
+
+        practiceFormPage.enterFirstName("John");
+        practiceFormPage.enterLastName("Doe");
+        practiceFormPage.enterEmail("john.doe@example.com");
         practiceFormPage.selectGender("Male");
-        practiceFormPage.fillUserNumber("1234567890");
-        practiceFormPage.fillDateOfBirth("01 Jan 2000");
+        practiceFormPage.enterPhoneNumber("1234567890");
+        practiceFormPage.setDateOfBirthSimple("01/15/1990");
         practiceFormPage.enterSubjects("Maths");
-        practiceFormPage.selectHobby("Sports");
+        practiceFormPage.selectHobbies(List.of("Sports"));
         practiceFormPage.uploadPicture(TEST_IMAGE_PATH);
-        practiceFormPage.fillCurrentAddress("123 Main St, New York");
+        practiceFormPage.enterAddress("123 Main St");
         practiceFormPage.submitForm();
 
-        // Verify submission results
+
         Assert.assertTrue(practiceFormPage.isModalDisplayed(),
                 "Confirmation modal should be visible after form submission");
         Assert.assertEquals(practiceFormPage.getModalTitle(),
                 "Thanks for submitting the form",
                 "Modal title should match expected confirmation message");
 
-        // Clean up
+
         practiceFormPage.closeModal();
     }
 }

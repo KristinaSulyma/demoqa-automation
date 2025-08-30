@@ -5,6 +5,7 @@ import com.demoqa.utils.SeleniumUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.By;
 
@@ -14,17 +15,11 @@ import org.openqa.selenium.By;
  */
 public class RadioButtonPage extends BasePage {
 
-    @FindBy(id = "yesRadio")
-    private WebElement yesRadioButton;
-
-    @FindBy(id = "impressiveRadio")
-    private WebElement impressiveRadioButton;
-
     @FindBy(id = "noRadio")
-    private WebElement noRadioButton;
+    WebElement noRadioButton;
 
     @FindBy(css = "p.mt-3")
-    private WebElement resultText;
+    WebElement resultText;
 
     /**
      * Constructs a new RadioButtonPage instance.
@@ -32,6 +27,7 @@ public class RadioButtonPage extends BasePage {
      */
     public RadioButtonPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
 
     /**

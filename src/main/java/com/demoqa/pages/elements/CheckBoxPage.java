@@ -4,8 +4,8 @@ import com.demoqa.pages.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.util.List;
 
 /**
@@ -20,16 +20,16 @@ import java.util.List;
 public class CheckBoxPage extends BasePage {
 
     @FindBy(css = "button[title='Expand all']")
-    private WebElement expandAllButton;
+    WebElement expandAllButton;
 
     @FindBy(xpath = "//span[text()='Home']")
-    private WebElement homeCheckBoxLabel;
+    WebElement homeCheckBoxLabel;
 
     @FindBy(css = ".rct-icon-check")
-    private List<WebElement> selectedCheckboxes;
+    List<WebElement> selectedCheckboxes;
 
     @FindBy(id = "result")
-    private WebElement resultText;
+    WebElement resultText;
 
     /**
      * Constructs a new CheckBoxPage instance.
@@ -37,6 +37,7 @@ public class CheckBoxPage extends BasePage {
      */
     public CheckBoxPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this); // Додано ініціалізацію PageFactory
     }
 
     /**

@@ -44,7 +44,7 @@ public class AlertsFramesTests extends BaseTest {
     @BeforeMethod
     public void setupPages() {
         alertsPage = new AlertsPage(driver);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(15)); // Increased timeout
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
     /**
