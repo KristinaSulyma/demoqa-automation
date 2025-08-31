@@ -4,6 +4,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.time.Duration;
 import java.util.List;
 
@@ -13,6 +15,9 @@ import java.util.List;
  * All specific page classes should extend this base class.
  */
 public class BasePage {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BasePage.class);
+
     protected final WebDriver driver;
     protected final WebDriverWait wait;
 
@@ -43,7 +48,7 @@ public class BasePage {
             wait.until(d -> "complete".equals(((JavascriptExecutor) driver)
                     .executeScript("return document.readyState")));
         } catch (WebDriverException e) {
-            System.out.println("Page load wait interrupted: " + e.getMessage());
+            LOGGER.warn("Page load wait interrupted: {}", e.getMessage());
         }
     }
 
@@ -63,7 +68,7 @@ public class BasePage {
                         "arguments[0].forEach(ad => ad.remove())", ads);
             }
         } catch (Exception e) {
-            System.out.println("Failed to remove ads: " + e.getMessage());
+            LOGGER.error("Failed to remove ads: {}", e.getMessage());
         }
     }
 

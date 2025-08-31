@@ -1,5 +1,6 @@
 package com.demoqa.regression;
 
+import com.demoqa.config.ConfigurationManager;
 import com.demoqa.pages.widgets.DatePickerPage;
 import com.demoqa.pages.widgets.ProgressBarPage;
 import com.demoqa.pages.widgets.SliderPage;
@@ -59,8 +60,7 @@ public class WidgetsTests {
      */
     @Test
     public void testSliderMovement() {
-        System.out.println("Running test: testSliderMovement");
-        driver.get("https://demoqa.com/slider");
+        driver.get(new ConfigurationManager().getBaseUrl() + "/slider");
         int targetValue = 75;
         sliderPage.setSliderValue(targetValue);
         Assert.assertEquals(sliderPage.getSliderValue(), String.valueOf(targetValue),
@@ -77,8 +77,7 @@ public class WidgetsTests {
      */
     @Test
     public void testProgressBarCompletion() {
-        System.out.println("Running test: testProgressBarCompletion");
-        driver.get("https://demoqa.com/progress-bar");
+        driver.get(new ConfigurationManager().getBaseUrl() + "/progress-bar");
         progressBarPage.startStopProgressBar();
         progressBarPage.waitForCompletion();
         Assert.assertEquals(progressBarPage.getProgressBarValue(), "100",
@@ -94,8 +93,7 @@ public class WidgetsTests {
      */
     @Test
     public void testDatePicker() {
-        System.out.println("Running test: testDatePicker");
-        driver.get("https://demoqa.com/date-picker");
+        driver.get(new ConfigurationManager().getBaseUrl() + "/date-picker");
         String expectedDate = "02/14/2024 10:30 AM";
         datePickerPage.selectDateAndTime(expectedDate);
         String actualDate = datePickerPage.getDatePickerValue();

@@ -51,7 +51,7 @@ public class ProgressBarPage extends BasePage {
      * Uses explicit wait to poll the progress value until it reaches "100".
      */
     public void waitForCompletion() {
-        wait.until(d -> "100".equals(getProgressBarValue()));
+        wait.until(d -> getProgressBarValue().equals("100"));
     }
 
     /**

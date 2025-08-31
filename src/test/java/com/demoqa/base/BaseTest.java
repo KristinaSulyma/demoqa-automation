@@ -11,6 +11,7 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.annotations.*;
+import org.testng.annotations.Optional;
 import java.time.Duration;
 import java.util.*;
 
@@ -36,6 +37,7 @@ import java.util.*;
  */
 @Listeners(TestListener.class)
 public class BaseTest {
+
     /**
      * WebDriver instance (public for TestListener access)
      */
@@ -57,14 +59,14 @@ public class BaseTest {
      */
     @BeforeMethod
     @Parameters("browser")
-    public void setUp(@org.testng.annotations.Optional("chrome") String browser) {
+    public void setUp(@Optional("chrome") String browser) {
         config = new ConfigurationManager();
 
-        if ("chrome".equalsIgnoreCase(browser)) {
+        if (browser.equalsIgnoreCase("chrome")) {
             setupChrome();
-        } else if ("firefox".equalsIgnoreCase(browser)) {
+        } else if (browser.equalsIgnoreCase("firefox")) {
             setupFirefox();
-        } else if ("edge".equalsIgnoreCase(browser)) {
+        } else if (browser.equalsIgnoreCase("edge")) {
             setupEdge();
         } else {
             throw new IllegalArgumentException("Invalid browser name: " + browser);
@@ -85,17 +87,14 @@ public class BaseTest {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
 
-
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-extensions");
         options.addArguments("--disable-infobars");
         options.addArguments("--remote-allow-origins=*");
 
-
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
         options.setExperimentalOption("useAutomationExtension", false);
-
 
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("profile.default_content_setting_values.popups", 0);

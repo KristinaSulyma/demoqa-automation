@@ -119,9 +119,9 @@
                 <configuration>
                     <!-- TestNG suite files to execute -->
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng_suites/functional_tests.xml</suiteXmlFile>
-                        <suiteXmlFile>src/test/resources/testng_suites/regression_tests.xml</suiteXmlFile>
-                        <suiteXmlFile>src/test/resources/testng_suites/smoke_tests.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/test_suites/functional_tests.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/test_suites/regression_tests.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/test_suites/smoke_tests.xml</suiteXmlFile>
                     </suiteXmlFiles>
 
                     <!-- AspectJ weaver for Allure reporting -->

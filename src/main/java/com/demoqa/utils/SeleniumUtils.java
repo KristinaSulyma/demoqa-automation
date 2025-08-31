@@ -2,6 +2,8 @@ package com.demoqa.utils;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.io.FileHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,6 +17,8 @@ import java.time.format.DateTimeFormatter;
  * Contains static methods for JavaScript interactions, waiting strategies, and screenshot functionality.
  */
 public class SeleniumUtils {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SeleniumUtils.class);
 
     /**
      * Clicks on a WebElement using JavaScript executor.
@@ -51,15 +55,15 @@ public class SeleniumUtils {
             FileHandler.copy(screenshotFile, destinationFile);
 
             String absolutePath = destinationFile.getAbsolutePath();
-            System.out.println("Screenshot saved: " + absolutePath);
+            LOGGER.info("Screenshot saved: {}", absolutePath);
 
             return absolutePath;
 
         } catch (IOException e) {
-            System.err.println("Failed to save screenshot: " + e.getMessage());
+            LOGGER.error("Failed to save screenshot: {}", e.getMessage());
             return null;
         } catch (Exception e) {
-            System.err.println("Unexpected error while taking screenshot: " + e.getMessage());
+            LOGGER.error("Unexpected error while taking screenshot: {}", e.getMessage());
             return null;
         }
     }

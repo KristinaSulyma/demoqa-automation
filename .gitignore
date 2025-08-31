@@ -1,0 +1,57 @@
+# Ignore build and output directories
+target/
+build/
+out/
+
+# Ignore Eclipse IDE files
+.classpath
+.project
+.settings/
+bin/
+
+# Ignore IntelliJ IDEA IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+modules.xml
+
+# Ignore compiled Java classes
+*.class
+
+# Ignore package files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Ignore log files
+*.log
+logs/
+
+# Ignore dependency directories (for non-Maven projects)
+lib/
+libs/
+
+# Ignore temporary files
+*.tmp
+*.temp
+*.cache
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore test reports and screenshots
+**/surefire-reports/
+**/test-output/
+**/screenshots/
+**/reports/
+
+# Ignore environment-specific config files
+*.env
+*.properties.local

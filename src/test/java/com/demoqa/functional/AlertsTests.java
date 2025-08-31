@@ -2,15 +2,12 @@ package com.demoqa.functional;
 
 import com.demoqa.base.BaseTest;
 import com.demoqa.config.ConfigurationManager;
-import com.demoqa.pages.alertsframes.AlertsPage;
+import com.demoqa.pages.alerts.AlertPage;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import java.time.Duration;
 
 /**
  * Functional test class for verifying JavaScript alerts functionality.
@@ -28,13 +25,12 @@ import java.time.Duration;
  *
  * <p>Extends BaseTest to inherit common test setup and browser management.
  */
-public class AlertsFramesTests extends BaseTest {
+public class AlertsTests extends BaseTest {
 
     /**
      * Page object for interacting with alerts page elements
      */
-    private AlertsPage alertsPage;
-    private WebDriverWait wait;
+    private AlertPage alertPage;
 
     /**
      * Initializes page objects before each test method execution.
@@ -42,8 +38,7 @@ public class AlertsFramesTests extends BaseTest {
      */
     @BeforeMethod
     public void setupPages() {
-        alertsPage = new AlertsPage(driver);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        alertPage = new AlertPage(driver);
     }
 
     /**
@@ -59,10 +54,10 @@ public class AlertsFramesTests extends BaseTest {
     public void testSimpleAlert() {
         driver.get(new ConfigurationManager().getBaseUrl() + "/alerts");
 
-        alertsPage.clickAlertButton();
+        alertPage.clickAlertButton();
 
         try {
-            Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = alertPage.waitForAlert();
             Assert.assertEquals(alert.getText(), "You clicked a button",
                     "Alert text mismatch - expected standard alert message");
             alert.accept();
@@ -84,12 +79,12 @@ public class AlertsFramesTests extends BaseTest {
     public void testConfirmAlert() {
         driver.get(new ConfigurationManager().getBaseUrl() + "/alerts");
 
-        alertsPage.clickConfirmButton();
+        alertPage.clickConfirmButton();
 
         try {
-            Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = alertPage.waitForAlert();
             alert.accept();
-            Assert.assertTrue(alertsPage.getConfirmResultText().contains("Ok"),
+            Assert.assertTrue(alertPage.getConfirmResultText().contains("Ok"),
                     "Confirmation result should acknowledge 'Ok' selection");
         } catch (TimeoutException e) {
             Assert.fail("Confirmation alert did not appear within 15 seconds");
@@ -110,13 +105,13 @@ public class AlertsFramesTests extends BaseTest {
         final String testText = "Hello World";
         driver.get(new ConfigurationManager().getBaseUrl() + "/alerts");
 
-        alertsPage.clickPromptButton();
+        alertPage.clickPromptButton();
 
         try {
-            Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = alertPage.waitForAlert();
             alert.sendKeys(testText);
             alert.accept();
-            Assert.assertTrue(alertsPage.getPromptResultText().contains(testText),
+            Assert.assertTrue(alertPage.getPromptResultText().contains(testText),
                     "Prompt result should echo the entered text");
         } catch (TimeoutException e) {
             Assert.fail("Prompt alert did not appear within 15 seconds");

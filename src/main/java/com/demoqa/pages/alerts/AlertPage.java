@@ -1,14 +1,13 @@
-package com.demoqa.pages.alertsframes;
+package com.demoqa.pages.alerts;
 
 import com.demoqa.pages.BasePage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.time.Duration;
 import java.util.List;
 
@@ -22,7 +21,9 @@ import java.util.List;
  *
  * <p>All methods include proper waits to ensure stable test execution.
  */
-public class AlertsPage extends BasePage {
+public class AlertPage extends BasePage {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AlertPage.class);
 
     @FindBy(id = "alertButton")
     private WebElement alertButton;
@@ -46,7 +47,7 @@ public class AlertsPage extends BasePage {
      * Constructor for AlertsPage.
      * @param driver WebDriver instance
      */
-    public AlertsPage(WebDriver driver) {
+    public AlertPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
@@ -106,6 +107,14 @@ public class AlertsPage extends BasePage {
     }
 
     /**
+     * Waits for alert to be present.
+     * @throws org.openqa.selenium.TimeoutException if alert doesn't appear within wait time
+     */
+    public Alert waitForAlert() {
+        return wait.until(ExpectedConditions.alertIsPresent());
+    }
+
+    /**
      * Attempts to handle advertisement iframes that might block interaction with page elements.
      * Switches to Ad iframe if present, tries to close it, then returns to main content.
      */
@@ -121,22 +130,14 @@ public class AlertsPage extends BasePage {
 
             if (!closeButtons.isEmpty()) {
                 closeButtons.getFirst().click();
-                System.out.println("Ad closed successfully.");
+                LOGGER.info("Ad closed successfully.");
             }
 
         } catch (Exception e) {
-            System.out.println("No ad found or could not close ad: " + e.getMessage());
+            LOGGER.warn("No ad found or could not close ad: {}", e.getMessage());
         } finally {
             driver.switchTo().defaultContent();
         }
-    }
-
-    /**
-     * Waits for alert to be present.
-     * @throws org.openqa.selenium.TimeoutException if alert doesn't appear within wait time
-     */
-    private void waitForAlert() {
-        wait.until(ExpectedConditions.alertIsPresent());
     }
 
     /**

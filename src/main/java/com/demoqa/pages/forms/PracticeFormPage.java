@@ -5,8 +5,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
 import java.util.List;
 
 /**
@@ -71,125 +69,83 @@ public class PracticeFormPage extends BasePage {
     }
 
     /**
-     * Sets date of birth using direct input (alternative method)
-     *
-     * @param date Date in format "MM/DD/YYYY" or other supported format
-     * @return Current instance of PracticeFormPage for method chaining
+     * Sets date of birth using direct input
      */
-    public PracticeFormPage setDateOfBirthSimple(String date) {
-        // Очищаємо поле і вводимо дату напряму
+    public void setDateOfBirthSimple(String date) {
         WebElement element = waitForVisibility(dateOfBirthInput);
         element.clear();
         element.sendKeys(date);
         element.sendKeys(Keys.ENTER);
-        return this;
     }
 
     /**
      * Enters first name into the corresponding field.
-     *
-     * @param firstName First name to enter
-     * @return Current instance of PracticeFormPage for method chaining
      */
-    public PracticeFormPage enterFirstName(String firstName) {
+    public void enterFirstName(String firstName) {
         waitAndSendKeys(firstNameInput, firstName);
-        return this;
     }
 
     /**
      * Enters last name into the corresponding field.
-     *
-     * @param lastName Last name to enter
-     * @return Current instance of PracticeFormPage for method chaining
      */
-    public PracticeFormPage enterLastName(String lastName) {
+    public void enterLastName(String lastName) {
         waitAndSendKeys(lastNameInput, lastName);
-        return this;
     }
 
     /**
      * Enters email address into the corresponding field.
-     *
-     * @param email Email to enter
-     * @return Current instance of PracticeFormPage for method chaining
      */
-    public PracticeFormPage enterEmail(String email) {
+    public void enterEmail(String email) {
         waitAndSendKeys(userEmailInput, email);
-        return this;
     }
-
     /**
      * Selects gender option.
-     *
-     * @param gender Gender to select ("Male", "Female", or "Other")
-     * @return Current instance of PracticeFormPage for method chaining
      */
-    public PracticeFormPage selectGender(String gender) {
+    public void selectGender(String gender) {
         genderOptions.stream()
                 .filter(option -> option.getText().equalsIgnoreCase(gender))
                 .findFirst()
                 .ifPresent(this::jsClick);
-        return this;
     }
 
     /**
      * Enters phone number into the corresponding field.
-     *
-     * @param phone Phone number to enter (10 digits)
-     * @return Current instance of PracticeFormPage for method chaining
      */
-    public PracticeFormPage enterPhoneNumber(String phone) {
+    public void enterPhoneNumber(String phone) {
         waitAndSendKeys(userNumberInput, phone);
-        return this;
     }
 
     /**
      * Enters subjects into the subjects field.
-     *
-     * @param subjects Subjects to enter
-     * @return Current instance of PracticeFormPage for method chaining
      */
-    public PracticeFormPage enterSubjects(String subjects) {
+    public void enterSubjects(String subjects) {
         WebElement element = waitForVisibility(subjectsInput);
         element.clear();
         element.sendKeys(subjects);
         element.sendKeys(Keys.ENTER);
-        return this;
     }
 
     /**
      * Selects hobbies from the available options.
-     *
-     * @param hobbies List of hobbies to select
-     * @return Current instance of PracticeFormPage for method chaining
      */
-    public PracticeFormPage selectHobbies(List<String> hobbies) {
+    public void selectHobbies(List<String> hobbies) {
         hobbiesOptions.stream()
                 .filter(option -> hobbies.contains(option.getText()))
                 .forEach(this::jsClick);
-        return this;
     }
 
     /**
      * Uploads a file using the file input.
-     *
-     * @param filePath Full path to the file to upload
-     * @return Current instance of PracticeFormPage for method chaining
      */
-    public PracticeFormPage uploadPicture(String filePath) {
+    public void uploadPicture(String filePath) {
         uploadPictureButton.sendKeys(filePath);
-        return this;
     }
 
     /**
      * Enters current address into the corresponding field.
-     *
-     * @param address Address to enter
-     * @return Current instance of PracticeFormPage for method chaining
      */
-    public PracticeFormPage enterAddress(String address) {
+    public void enterAddress(String address) {
         waitAndSendKeys(currentAddressInput, address);
-        return this;
     }
 
     /**
@@ -228,9 +184,7 @@ public class PracticeFormPage extends BasePage {
      */
     public void closeModal() {
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.invisibilityOfElementLocated(
-                            By.cssSelector("iframe[id^='google_ads_iframe']")));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("iframe[id^='google_ads_iframe']")));
             jsClick(closeButton);
         } catch (TimeoutException e) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", closeButton);
@@ -253,8 +207,7 @@ public class PracticeFormPage extends BasePage {
      * @return Visible WebElement
      */
     protected WebElement waitForVisibility(WebElement element) {
-        return new WebDriverWait(driver, Duration.ofSeconds(15))
-                .until(ExpectedConditions.visibilityOf(element));
+        return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     /**

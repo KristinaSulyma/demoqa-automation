@@ -72,7 +72,6 @@ public class FormsTests extends BaseTest {
     public void testFormSubmissionWithAllFields() {
         driver.get(new ConfigurationManager().getBaseUrl() + "/automation-practice-form");
 
-
         practiceFormPage.enterFirstName("John");
         practiceFormPage.enterLastName("Doe");
         practiceFormPage.enterEmail("john.doe@example.com");
@@ -85,13 +84,11 @@ public class FormsTests extends BaseTest {
         practiceFormPage.enterAddress("123 Main St");
         practiceFormPage.submitForm();
 
-
         Assert.assertTrue(practiceFormPage.isModalDisplayed(),
                 "Confirmation modal should be visible after form submission");
         Assert.assertEquals(practiceFormPage.getModalTitle(),
                 "Thanks for submitting the form",
                 "Modal title should match expected confirmation message");
-
 
         practiceFormPage.closeModal();
     }

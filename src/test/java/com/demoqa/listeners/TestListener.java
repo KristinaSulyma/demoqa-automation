@@ -6,6 +6,8 @@ import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
@@ -26,6 +28,8 @@ import org.testng.ITestResult;
  */
 public class TestListener implements ITestListener {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestListener.class);
+
     /**
      * Invoked when a test fails. Captures screenshot and attaches it to Allure report,
      * then saves it locally via {@link SeleniumUtils#takeScreenshot}.
@@ -44,9 +48,9 @@ public class TestListener implements ITestListener {
                 String filePath = SeleniumUtils.takeScreenshot(driver, screenshotName);
 
                 if (allureScreenshot.length > 0 && filePath != null) {
-                    System.out.println("Screenshot captured and saved successfully: " + filePath);
+                    LOGGER.info("Screenshot captured and saved successfully: {}", filePath);
                 } else {
-                    System.out.println("Failed to capture or save screenshot");
+                    LOGGER.error("Failed to capture or save screenshot");
                 }
             }
         }
@@ -75,7 +79,7 @@ public class TestListener implements ITestListener {
      */
     @Override
     public void onTestStart(ITestResult result) {
-        System.out.println("Test started: " + result.getName());
+        LOGGER.info("Test started: {}", result.getName());
     }
 
     /**
@@ -85,8 +89,7 @@ public class TestListener implements ITestListener {
      */
     @Override
     public void onTestSuccess(ITestResult result) {
-        System.out.println("Test passed: " + result.getName());
-    }
+        LOGGER.info("Test passed: {}", result.getName());    }
 
     /**
      * Logs test skip information to console output.
@@ -95,6 +98,6 @@ public class TestListener implements ITestListener {
      */
     @Override
     public void onTestSkipped(ITestResult result) {
-        System.out.println("Test skipped: " + result.getName());
+        LOGGER.warn("Test skipped: {}", result.getName());
     }
 }

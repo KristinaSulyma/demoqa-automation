@@ -25,13 +25,11 @@ src/
 ├── main/java/com/demoqa/ - Page Object classes and utilities
 ├── test/java/com/demoqa/ - Test classes (functional, regression, smoke)
 └── test/resources/
-├── testng_suites/ - TestNG configuration files
+├── test_suites/ - TestNG configuration files
 │ ├── functional_tests.xml
 │ ├── regression_tests.xml
 │ └── smoke_tests.xml
 └── config.properties - Framework configuration
-
-text
 
 ## 🎯 Test Suites
 
@@ -42,83 +40,59 @@ The framework includes multiple test suites:
 
 ## ⚡ Quick Start
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/KristinaSulyma/demoqa-automation.git
-cd demoqa-automation
-2. Run all test suites
-bash
-mvn clean test
-3. Run specific test suite
-bash
+1. Clone the repository - git clone https://github.com/KristinaSulyma/demoqa-automation.git && cd demoqa-automation
+
+2. Run all test suites - mvn clean test
+
+3. Run specific test suite:
 # Run only smoke tests
-mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testng_suites/smoke_tests.xml
+mvn test -Dsurefire.suiteXmlFiles=src/test/resources/test_suites/smoke_tests.xml
 
 # Run only functional tests
-mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testng_suites/functional_tests.xml
+mvn test -Dsurefire.suiteXmlFiles=src/test/resources/test_suites/functional_tests.xml
 
 # Run only regression tests
-mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testng_suites/regression_tests.xml
-📊 Test Reports
-Allure Reports
-After test execution, generate Allure report:
+mvn test -Dsurefire.suiteXmlFiles=src/test/resources/test_suites/regression_tests.xml
 
-bash
+📊 Test Reports
+
+Allure Reports:
+After test execution, generate Allure report:
 # Generate Allure report
 allure serve target/allure-results
 
 # Or generate report to directory
 allure generate target/allure-results -o target/allure-report
-Surefire Reports
+
+Surefire Reports:
 HTML reports are available at: target/surefire-reports/index.html
 
 ⚙️ Configuration
 Framework configuration is managed through:
 
 src/test/resources/config.properties - Environment settings
-
 TestNG XML files - Test suite configurations
-
 pom.xml - Dependencies and build settings
 
 🧪 Test Coverage
 The framework covers following DemoQA sections:
 
 Elements (Text Box, Buttons, Check Box, Radio Button)
-
 Forms (Practice Form)
-
 Alerts, Frame & Windows
-
 Widgets (Slider, Progress Bar, Date Picker)
-
 Interactions (Drag & Drop)
 
 🔧 Build Configuration
 Key Maven plugins configured:
 
 maven-compiler-plugin - Java 21 compilation
-
 maven-surefire-plugin - Test execution with Allure integration
-
 AspectJ weaver - Allure attachment support
 
 📝 Logging
 The framework uses layered logging:
 
 SLF4J as logging facade
-
 Log4j2 as implementation
-
 Console and file appenders configured
-
-🤝 Contributing
-Fork the project
-
-Create your feature branch
-
-Commit your changes
-
-Push to the branch
-
-Create a Pull Request

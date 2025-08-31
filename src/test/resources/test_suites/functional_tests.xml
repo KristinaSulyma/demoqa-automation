@@ -19,7 +19,7 @@
     <test name="Alerts &amp; Frames Functional Tests">
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="com.demoqa.functional.AlertsFramesTests"/>
+            <class name="com.demoqa.functional.AlertsTests"/>
         </classes>
     </test>
 </suite>
